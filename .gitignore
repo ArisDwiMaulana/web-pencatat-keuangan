@@ -1,0 +1,24 @@
+# # PocketBase Data & Logs
+data/auxiliary.db
+data/data.db
+data/*.db-shm
+data/*.db-wal
+data/types.d.ts
+
+# # Tailwind Standalone Executable & Generated CSS
+public/tailwindcss
+public/output.css
+public/daisyui.css
+
+# # Environment & Secrets
+.env
+.env.*
+!.env.example
+
+# # Operating System Files
+.DS_Store
+Thumbs.db
+
+# # IDE Files
+.vscode/
+.idea/
