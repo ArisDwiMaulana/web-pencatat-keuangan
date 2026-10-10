@@ -44,29 +44,59 @@ function getMonth(data) {
   return Number(data.tanggal.split("-")[1]);
 }
 
+function uiRingkasan(masuk, keluar, sisa) {
+  return `
+        <h2 class="text-sm font-semibold text-slate-700 mb-4">
+          Ringkasan Bulan Ini
+        </h2>
+        <div class="grid grid-cols-3 text-center">
+          <!-- Masuk -->
+          <div>
+            <p class="text-xs text-slate-500 font-medium mb-1">Masuk</p>
+            <p class="text-base sm:text-lg font-bold text-[#10b981]">
+              Rp ${masuk.toLocaleString("id-ID")}
+            </p>
+          </div>
+          <!-- Keluar -->
+          <div>
+            <p class="text-xs text-slate-500 font-medium mb-1">Keluar</p>
+            <p class="text-base sm:text-lg font-bold text-[#ef4444]">
+              Rp ${keluar.toLocaleString("id-ID")}
+            </p>
+          </div>
+          <!-- Saldo -->
+          <div>
+            <p class="text-xs text-slate-500 font-medium mb-1">Sisa Saldo</p>
+            <p class="text-base sm:text-lg font-bold text-slate-800">
+              Rp ${sisa.toLocaleString("id-ID")}
+            </p>
+          </div>
+        </div>
+
+`;
+}
+
 function ringkasan() {
   const now = new Date();
   const bulanSekarang = now.getMonth() + 1;
   let uangMasuk = 0;
   let uangKeluar = 0;
   let uangSisa = 0;
+  const cardRingkasan = document.getElementById("card-ringkasan");
 
   fetch("/api/collections/transaksi/records")
     .then((response) => response.json())
     .then((data) => {
       const transaksi = data.items;
-      console.log(bulanSekarang);
       transaksi.forEach((item) => {
         if (bulanSekarang === getMonth(item)) {
           uangMasuk += item.tipe === "Pemasukan" ? item.nominal : 0;
           uangKeluar += item.tipe === "Pengeluaran" ? item.nominal : 0;
         }
       });
-      console.log(typeof getMonth(transaksi[0]));
-      console.log(`uang masuk ${uangMasuk}`);
-      console.log(`uang keluar ${uangKeluar}`);
       uangSisa = uangMasuk - uangKeluar;
-      console.log(`uang sisa ${uangSisa}`);
+      console.log(cardRingkasan);
+      cardRingkasan.innerHTML = uiRingkasan(uangMasuk, uangKeluar, uangSisa);
     })
     .catch((err) => console.log(err));
 }
@@ -78,8 +108,7 @@ formCatat.addEventListener("submit", function (event) {
   data.tipe = tipe;
   validasi(data);
   simpanData(data);
-  console.log(data);
-  //typeof data;
+  ringkasan();
   formCatat.reset();
 });
 
