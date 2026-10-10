@@ -43,10 +43,11 @@
             >
             <div class="relative">
               <select
+                id="filter-periode"
                 class="w-full appearance-none bg-white border border-slate-200 rounded-lg px-3.5 py-2.5 text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm cursor-pointer pr-10"
               >
-                <option value="1-minggu">1 minggu</option>
-                <option value="1-bulan">1 bulan</option>
+                <option value="minggu-ini">Minggu Ini</option>
+                <option value="bulan-ini">Bulan Ini</option>
                 <option value="semua">Semua</option>
               </select>
               <div
@@ -69,13 +70,14 @@
             </div>
           </div>
 
-          <!-- Jenis -->
+          <!-- Tipe -->
           <div>
             <label class="block text-xs font-medium text-slate-500 mb-1.5"
-              >Jenis</label
+              >Tipe</label
             >
             <div class="relative">
               <select
+                id="filter-tipe"
                 class="w-full appearance-none bg-white border border-slate-200 rounded-lg px-3.5 py-2.5 text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm cursor-pointer pr-10"
               >
                 <option value="semua">Semua</option>
@@ -103,20 +105,21 @@
           </div>
         </div>
 
-        <!-- Baris 2: Kategori & Tombol Ekspor CSV -->
+        <!-- Baris 2: Jenis Transaksi & Tombol Ekspor CSV -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <!-- Kategori -->
           <div>
             <label class="block text-xs font-medium text-slate-500 mb-1.5"
-              >Kategori</label
+              >Jenis Transaksi</label
             >
             <div class="relative">
               <select
+                id="filter-jenis"
                 class="w-full appearance-none bg-white border border-slate-200 rounded-lg px-3.5 py-2.5 text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm cursor-pointer pr-10"
               >
-                <option value="semua">Semua kategori</option>
-                <option value="makanan">Makanan & Minuman</option>
-                <option value="transportasi">Transportasi</option>
+                <option value="semua">Semua</option>
+                <option value="Cash">Cash</option>
+                <option value="Cashless">Cashless</option>
               </select>
               <div
                 class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-700"
@@ -141,6 +144,7 @@
           <!-- Tombol Ekspor CSV -->
           <div class="flex items-end">
             <button
+              id="btn-ekspor-csv"
               type="button"
               class="w-full bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 font-medium py-2.5 rounded-lg text-sm transition"
             >
@@ -158,27 +162,10 @@
             >
             <div class="relative">
               <input
-                type="text"
-                placeholder="mm/dd/yyyy"
+                id="filter-dari-tanggal"
+                type="date"
                 class="w-full border border-slate-200 rounded-lg px-3.5 py-2.5 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
               />
-              <div
-                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-700"
-              >
-                <svg
-                  class="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  ></path>
-                </svg>
-              </div>
             </div>
           </div>
 
@@ -189,27 +176,10 @@
             >
             <div class="relative">
               <input
-                type="text"
-                placeholder="mm/dd/yyyy"
+                id="filter-sampai-tanggal"
+                type="date"
                 class="w-full border border-slate-200 rounded-lg px-3.5 py-2.5 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
               />
-              <div
-                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-700"
-              >
-                <svg
-                  class="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  ></path>
-                </svg>
-              </div>
             </div>
           </div>
         </div>
@@ -217,12 +187,14 @@
         <!-- Baris 4: Tombol Aksi (Tampilkan & Reset) -->
         <div class="flex gap-3 pt-1">
           <button
+            id="btn-tampilkan"
             type="button"
             class="flex-1 bg-[#181e2b] hover:bg-slate-800 text-white font-medium py-2.5 rounded-lg text-sm transition"
           >
             Tampilkan
           </button>
           <button
+            id="btn-reset"
             type="button"
             class="bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 px-5 py-2.5 rounded-lg text-sm font-medium transition"
           >
@@ -237,17 +209,17 @@
           <!-- Masuk -->
           <div>
             <p class="text-xs text-slate-500 font-medium mb-1">Masuk</p>
-            <p class="text-base sm:text-lg font-bold text-[#10b981]">300.000</p>
+            <p id="ringkasan-masuk" class="text-base sm:text-lg font-bold text-[#10b981]">0</p>
           </div>
           <!-- Keluar -->
           <div>
             <p class="text-xs text-slate-500 font-medium mb-1">Keluar</p>
-            <p class="text-base sm:text-lg font-bold text-[#ef4444]">39.500</p>
+            <p id="ringkasan-keluar" class="text-base sm:text-lg font-bold text-[#ef4444]">0</p>
           </div>
           <!-- Saldo -->
           <div>
             <p class="text-xs text-slate-500 font-medium mb-1">Saldo</p>
-            <p class="text-base sm:text-lg font-bold text-slate-800">260.500</p>
+            <p id="ringkasan-saldo" class="text-base sm:text-lg font-bold text-slate-800">0</p>
           </div>
         </div>
       </div>
@@ -258,71 +230,16 @@
       >
         <!-- Header Kartu -->
         <div
+          id="transaksi-total"
           class="px-5 py-3.5 border-b border-slate-100 text-xs text-slate-400"
         >
-          3 transaksi
+          0 transaksi
         </div>
 
         <!-- List Transaksi -->
-        <div class="divide-y divide-slate-100">
-          <!-- Transaksi 1 -->
-          <div
-            class="p-5 flex justify-between items-center hover:bg-slate-50/50 transition"
-          >
-            <div>
-              <h3 class="text-sm font-semibold text-slate-800">
-                Uang Mingguan
-              </h3>
-              <p class="text-xs text-slate-400 mt-1">03 Okt 2026</p>
-            </div>
-            <div class="flex items-center gap-4">
-              <span class="text-sm font-bold text-[#10b981]">+Rp300.000</span>
-              <button
-                class="text-xs text-slate-400 hover:text-red-500 transition"
-              >
-                Hapus
-              </button>
-            </div>
-          </div>
-
-          <!-- Transaksi 2 -->
-          <div
-            class="p-5 flex justify-between items-center hover:bg-slate-50/50 transition"
-          >
-            <div>
-              <h3 class="text-sm font-semibold text-slate-800">Makan</h3>
-              <p class="text-xs text-slate-400 mt-1">
-                03 Okt 2026 · beli buntil dan baso goreng
-              </p>
-            </div>
-            <div class="flex items-center gap-4">
-              <span class="text-sm font-bold text-[#ef4444]">-Rp14.500</span>
-              <button
-                class="text-xs text-slate-400 hover:text-red-500 transition"
-              >
-                Hapus
-              </button>
-            </div>
-          </div>
-
-          <!-- Transaksi 3 -->
-          <div
-            class="p-5 flex justify-between items-center hover:bg-slate-50/50 transition"
-          >
-            <div>
-              <h3 class="text-sm font-semibold text-slate-800">Makan</h3>
-              <p class="text-xs text-slate-400 mt-1">
-                03 Okt 2026 · nasi goreng via proxy
-              </p>
-            </div>
-            <div class="flex items-center gap-4">
-              <span class="text-sm font-bold text-[#ef4444]">-Rp25.000</span>
-              <button
-                class="text-xs text-slate-400 hover:text-red-500 transition"
-              >
-                Hapus
-              </button>
-            </div>
+        <div id="daftar-transaksi" class="divide-y divide-slate-100">
+          <div class="p-8 text-center text-sm text-slate-400">
+            Memuat transaksi...
           </div>
         </div>
 
@@ -331,12 +248,14 @@
           class="p-4 border-t border-slate-100 flex justify-between items-center"
         >
           <button
+            id="btn-prev"
             class="border border-slate-200 text-slate-400 bg-white px-3 py-1.5 rounded-lg text-xs font-medium cursor-not-allowed"
           >
             Sebelumnya
           </button>
-          <span class="text-xs text-slate-500">Halaman 1 dari 1</span>
+          <span id="halaman-info" class="text-xs text-slate-500">Halaman 1 dari 1</span>
           <button
+            id="btn-next"
             class="border border-slate-200 text-slate-400 bg-white px-3 py-1.5 rounded-lg text-xs font-medium cursor-not-allowed"
           >
             Berikutnya
@@ -345,4 +264,5 @@
       </div>
     </main>
   </body>
+  <script src="js/halaman_riwayat/riwayat.js"></script>
 </html>
