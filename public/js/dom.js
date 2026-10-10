@@ -1,10 +1,9 @@
 const btnPengeluaran = document.getElementById("pengeluaran");
 const btnPemasukan = document.getElementById("pemasukan");
 const dropDownKategori = document.getElementById("kategori");
-let tipe = "Pengeluaran";
 
 const dropdownPemasukan = `
-<select class="select appearance-none w-full" required name="kategori">
+<select class="select appearance-none w-full" required name="kategori" id="select-kategori">
   <option>Uang Mingguan</option>
   <option>Hadiah</option>
   <option>Lainnya</option>
@@ -12,7 +11,7 @@ const dropdownPemasukan = `
 `;
 
 const dropdownPengeluaran = `
-<select class="select appearance-none w-full" required name="kategori">
+<select class="select appearance-none w-full" required name="kategori" id="select-kategori">
   <option>Makan</option>
   <option>Bensin</option>
   <option>Kebutuhan Lainnya</option>
@@ -36,7 +35,6 @@ btnPemasukan.addEventListener("click", function () {
   btnPengeluaran.classList.add("text-slate-600");
 
   dropDownKategori.innerHTML = dropdownPemasukan;
-  tipe = "Pemasukan";
 });
 
 btnPengeluaran.addEventListener("click", function () {
@@ -55,7 +53,4 @@ btnPengeluaran.addEventListener("click", function () {
   btnPemasukan.classList.add("text-slate-600");
 
   dropDownKategori.innerHTML = dropdownPengeluaran;
-  tipe = "Pengeluaran";
 });
-
-export default tipe;
