@@ -1,9 +1,4 @@
-/**
- * riwayat.js - Implementasi logika halaman Riwayat Transaksi Keuangan
- * Path API: /api/collections/transaksi/records
- */
-
-// Konstanta
+// Variabel tetap
 const API_URL = "/api/collections/transaksi/records";
 const ITEMS_PER_PAGE = 10;
 
@@ -101,8 +96,24 @@ function isMingguIni(tanggalStr) {
   const day = now.getDay(); // 0: Minggu, 1: Senin, ...
   const diffToMonday = day === 0 ? -6 : 1 - day;
 
-  const startOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() + diffToMonday, 0, 0, 0, 0);
-  const endOfWeek = new Date(startOfWeek.getFullYear(), startOfWeek.getMonth(), startOfWeek.getDate() + 6, 23, 59, 59, 999);
+  const startOfWeek = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() + diffToMonday,
+    0,
+    0,
+    0,
+    0,
+  );
+  const endOfWeek = new Date(
+    startOfWeek.getFullYear(),
+    startOfWeek.getMonth(),
+    startOfWeek.getDate() + 6,
+    23,
+    59,
+    59,
+    999,
+  );
 
   return tgl >= startOfWeek && tgl <= endOfWeek;
 }
@@ -115,7 +126,9 @@ function isBulanIni(tanggalStr) {
   if (!tgl) return false;
 
   const now = new Date();
-  return tgl.getFullYear() === now.getFullYear() && tgl.getMonth() === now.getMonth();
+  return (
+    tgl.getFullYear() === now.getFullYear() && tgl.getMonth() === now.getMonth()
+  );
 }
 
 /**
@@ -190,10 +203,16 @@ function terapkanFilter() {
 
     // 2. Filter Periode (hanya jika rentang tanggal kustom tidak diisi keduanya)
     if (!dariTanggalVal && !sampaiTanggalVal) {
-      if (periode === "minggu-ini" && !isMingguIni(item.tanggal || item.created)) {
+      if (
+        periode === "minggu-ini" &&
+        !isMingguIni(item.tanggal || item.created)
+      ) {
         return false;
       }
-      if (periode === "bulan-ini" && !isBulanIni(item.tanggal || item.created)) {
+      if (
+        periode === "bulan-ini" &&
+        !isBulanIni(item.tanggal || item.created)
+      ) {
         return false;
       }
     }
@@ -299,7 +318,9 @@ function renderTransaksi() {
       const tanda = isPemasukan ? "+" : "-";
       const warnaNominal = isPemasukan ? "text-[#10b981]" : "text-[#ef4444]";
       const tglFormatted = formatTanggal(item.tanggal || item.created);
-      const keterangan = item.keterangan ? ` · ${escapeHtml(item.keterangan)}` : "";
+      const keterangan = item.keterangan
+        ? ` · ${escapeHtml(item.keterangan)}`
+        : "";
       const kategori = escapeHtml(item.kategori || "Lainnya");
 
       return `
@@ -343,20 +364,24 @@ function perbaruiPagination(totalPages) {
   if (btnPrev) {
     if (halamanAktif <= 1) {
       btnPrev.disabled = true;
-      btnPrev.className = "border border-slate-200 text-slate-400 bg-white px-3 py-1.5 rounded-lg text-xs font-medium cursor-not-allowed";
+      btnPrev.className =
+        "border border-slate-200 text-slate-400 bg-white px-3 py-1.5 rounded-lg text-xs font-medium cursor-not-allowed";
     } else {
       btnPrev.disabled = false;
-      btnPrev.className = "border border-slate-200 text-slate-700 hover:bg-slate-50 bg-white px-3 py-1.5 rounded-lg text-xs font-medium cursor-pointer transition";
+      btnPrev.className =
+        "border border-slate-200 text-slate-700 hover:bg-slate-50 bg-white px-3 py-1.5 rounded-lg text-xs font-medium cursor-pointer transition";
     }
   }
 
   if (btnNext) {
     if (halamanAktif >= totalPages) {
       btnNext.disabled = true;
-      btnNext.className = "border border-slate-200 text-slate-400 bg-white px-3 py-1.5 rounded-lg text-xs font-medium cursor-not-allowed";
+      btnNext.className =
+        "border border-slate-200 text-slate-400 bg-white px-3 py-1.5 rounded-lg text-xs font-medium cursor-not-allowed";
     } else {
       btnNext.disabled = false;
-      btnNext.className = "border border-slate-200 text-slate-700 hover:bg-slate-50 bg-white px-3 py-1.5 rounded-lg text-xs font-medium cursor-pointer transition";
+      btnNext.className =
+        "border border-slate-200 text-slate-700 hover:bg-slate-50 bg-white px-3 py-1.5 rounded-lg text-xs font-medium cursor-pointer transition";
     }
   }
 }
@@ -407,7 +432,14 @@ function eksporCSV() {
     return;
   }
 
-  const header = ["Tanggal", "Tipe", "Kategori", "Jenis Transaksi", "Nominal", "Keterangan"];
+  const header = [
+    "Tanggal",
+    "Tipe",
+    "Kategori",
+    "Jenis Transaksi",
+    "Nominal",
+    "Keterangan",
+  ];
   const baris = daftarTransaksiTerfilter.map((item) => {
     const tgl = formatTanggal(item.tanggal || item.created);
     return [
@@ -423,18 +455,20 @@ function eksporCSV() {
   const isiCSV = [
     header.join(","),
     ...baris.map((b) =>
-      b.map((val) => `"${String(val).replace(/"/g, '""')}"`).join(",")
+      b.map((val) => `"${String(val).replace(/"/g, '""')}"`).join(","),
     ),
   ].join("\r\n");
 
   // Tambahkan UTF-8 BOM (\uFEFF) agar Microsoft Excel membaca encoding dengan benar
-  const blob = new Blob(["\uFEFF" + isiCSV], { type: "text/csv;charset=utf-8;" });
+  const blob = new Blob(["\uFEFF" + isiCSV], {
+    type: "text/csv;charset=utf-8;",
+  });
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
   const tanggalHariIni = new Date().toISOString().split("T")[0];
 
   anchor.href = url;
-  anchor.download = `riwayat_transaksi_${tanggalHariIni}.csv`;
+  anchor.download = `riwayat_transaksi_hingga_${tanggalHariIni}.csv`;
   document.body.appendChild(anchor);
   anchor.click();
   document.body.removeChild(anchor);
@@ -499,7 +533,8 @@ if (btnPrev) {
 
 if (btnNext) {
   btnNext.addEventListener("click", () => {
-    const totalPages = Math.ceil(daftarTransaksiTerfilter.length / ITEMS_PER_PAGE) || 1;
+    const totalPages =
+      Math.ceil(daftarTransaksiTerfilter.length / ITEMS_PER_PAGE) || 1;
     if (halamanAktif < totalPages) {
       halamanAktif++;
       renderTransaksi();
